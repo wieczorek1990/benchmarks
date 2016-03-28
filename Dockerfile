@@ -1,6 +1,6 @@
 from debian:unstable
 
-run apt-get update && apt-get install -y build-essential curl git procps vim
+run apt-get update && apt-get install -y build-essential curl git vim
 
 # Crystal
 run curl http://dist.crystal-lang.org/apt/setup.sh | bash
