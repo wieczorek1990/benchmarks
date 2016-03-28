@@ -17,24 +17,22 @@ function run {
 
   cd $directory
   ./run.sh &
-  bench_pid=$!
   sleep $startup_seconds
   test
-  pkill -INT -P $bench_pid
+  kill_blocker
   sleep $shutdown_seconds
   cd - &> /dev/null
 }
 
-function blocker {
-  netstat -tulpn 2>/dev/null | grep :$port | tr -s ' ' | cut -f7 -d' ' | cut -f1 -d/
+function kill_blocker {
+  last_pid=`netstat -tulpn 2>/dev/null | grep :$port | tr -s ' ' | cut -f7 -d' ' | cut -f1 -d/`
+  if [ -n "$last_pid" ]
+  then
+    kill -9 $last_pid
+  fi
 }
 
-last_pid=`blocker`
-if [ -n "$last_pid" ]
-then
-  kill -9 $last_pid
-fi
-
+kill_blocker
 for language in ${!configurations[@]}
 do
   frameworks=${configurations[$language]}

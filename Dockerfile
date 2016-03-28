@@ -21,6 +21,11 @@ run apt-get install -y ruby ruby-dev libsqlite3-dev
 # Bundler
 run gem install bundler --pre -N
 
+# Rust
+run curl -sSf https://static.rust-lang.org/rustup.sh | sh
+# Rust nightly
+# run curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly
+
 # wrk
 workdir /opt/
 run git clone https://github.com/wg/wrk.git
