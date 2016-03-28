@@ -1,0 +1,12 @@
+name: hello
+version: 0.1.0
+
+authors:
+  - Łukasz Wieczorek <'wieczorek1990@gmail.com'>
+
+license: MIT
+
+dependencies:
+  kemal:
+    github: sdogruyol/kemal
+    branch: master
