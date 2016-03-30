@@ -33,7 +33,7 @@ run git clone https://github.com/wg/wrk.git
 run cd wrk && make && cp wrk /usr/local/bin/
 
 add . /opt/benchmarks/
+workdir /opt/benchmarks/
 run ["/opt/benchmarks/install.sh"]
 
-workdir /opt/benchmarks/
 cmd ["/opt/benchmarks/run.sh"]
