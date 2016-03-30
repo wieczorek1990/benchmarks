@@ -22,6 +22,7 @@ run apt-get install -y ruby ruby-dev libsqlite3-dev
 run gem install bundler --pre -N
 
 # Rust
+run apt-get install sudo
 run curl -sSf https://static.rust-lang.org/rustup.sh | sh
 # Rust nightly
 # run curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly
