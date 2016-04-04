@@ -13,7 +13,4 @@ declare -A configurations=(
 connections=256
 duration=4
 threads=4
-
-startup_seconds=4
-shutdown_seconds=2
 ####

@@ -20,6 +20,10 @@ Apps:
 Running:
 ```
 docker build -t benchmarks .
+# or if you wish not to use httpredir
+docker build --build-arg sources_prefix=ftp.pl -t benchmarks .
+
+docker rm -f benchmarks
 docker run --name benchmarks benchmarks
 ```
 

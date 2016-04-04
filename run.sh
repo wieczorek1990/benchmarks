@@ -4,12 +4,13 @@
 # Constants
 host=localhost
 port=3000
+url=http://$host:$port
 ####
 
 source ./config.sh
 
 function test {
-  wrk -c $connections -d $duration -t $threads http://$host:$port
+  wrk -c $connections -d $duration -t $threads $url
 }
 
 function run {
@@ -17,18 +18,22 @@ function run {
 
   cd $directory
   ./run.sh &
-  sleep $startup_seconds
+  while ! curl $url > /dev/null 2>&1; do : ; done
   test
   kill_blocker
-  sleep $shutdown_seconds
   cd - &> /dev/null
 }
 
 function kill_blocker {
-  last_pid=`netstat -tulpn 2>/dev/null | grep :$port | tr -s ' ' | cut -f7 -d' ' | cut -f1 -d/`
-  if [ -n "$last_pid" ]
+  pid=`netstat -tulpn 2>/dev/null | grep :$port | tr -s ' ' | cut -f7 -d' ' | cut -f1 -d/`
+  if [ -n "$pid" ]
   then
-    kill -9 $last_pid
+    kill -9 $pid
+    while :
+    do
+      kill -0 $pid
+      [[ $? -ne 0 ]] || break
+    done
   fi
 }
 

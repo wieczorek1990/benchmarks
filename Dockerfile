@@ -1,36 +1,25 @@
 from debian:unstable
 
-run apt-get update && apt-get install -y build-essential curl git vim
+arg sources_prefix=httpredir
+env sources_prefix $sources_prefix
+run sed -i s/httpredir/$sources_prefix/g /etc/apt/sources.list
+
+run apt-get update && apt-get install -y build-essential curl git net-tools vim wrk
 
 # Crystal
 run curl http://dist.crystal-lang.org/apt/setup.sh | bash
 run apt-get install -y crystal libssl-dev
 
 # Python
-run apt-get install -y python python-dev
-# pip
-run curl https://bootstrap.pypa.io/get-pip.py | python
+run apt-get install -y python python-dev python-pip
 
 # Ruby
 run apt-get install -y ruby ruby-dev libsqlite3-dev
-# RVM
-# run gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-# run curl -sSL https://get.rvm.io | bash
-# Latest Ruby
-# run source /etc/profile.d/rvm.sh && rvm install ruby --latest
 # Bundler
 run gem install bundler --pre -N
 
 # Rust
-run apt-get install sudo
-run curl -sSf https://static.rust-lang.org/rustup.sh | sh
-# Rust nightly
-# run curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly
-
-# wrk
-workdir /opt/
-run git clone https://github.com/wg/wrk.git
-run cd wrk && make && cp wrk /usr/local/bin/
+run apt-get install -y cargo rustc
 
 add . /opt/benchmarks/
 workdir /opt/benchmarks/

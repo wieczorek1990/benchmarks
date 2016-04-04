@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-pip install flask uwsgi -U
+pip install -U -r requirements.txt
